@@ -1,0 +1,17 @@
+<resources>
+
+	<string name="app_name">广东高考成绩查询</string>
+	<string name="action_help">帮助</string>
+
+	<string name="hint_number">学号</string>
+	<string name="hint_birthyear_moneth">出生年月 (如：9801)</string>
+	<string name="hint_captcha">验证码</string>
+
+	<string name="btn_query_score">查询成绩</string>
+
+	<string name="score_result_title">查询结果</string>
+	<string name="score_result_header">姓名：%1$s\n学号：%2$s\nIssue 日期：%3$s\n各科目成绩：\n</string>
+	<string name="score_result_item_format">· %1$s ： %2$s\n</string>
+	<string name="score_result_footer">最终成绩结果由学校派放正式通知为准。</string>
+
+</resources>

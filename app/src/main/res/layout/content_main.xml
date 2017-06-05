@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		tools:showIn="@layout/activity_main"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context="moe.feng.gd.gaokaoquery.ui.MainActivity">
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="16dp">
+
+		<Spinner
+				android:id="@+id/spinner_year"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"/>
+
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+		    android:layout_height="wrap_content">
+
+			<EditText
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/edit_number"
+					android:singleLine="true"
+					android:inputType="numberDecimal"
+					android:maxLength="10"
+					android:hint="@string/hint_number"/>
+
+		</android.support.design.widget.TextInputLayout>
+
+		<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp">
+
+			<EditText
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/edit_birth"
+					android:singleLine="true"
+					android:inputType="numberPassword"
+					android:maxLength="4"
+					android:hint="@string/hint_birthyear_moneth"/>
+
+		</android.support.design.widget.TextInputLayout>
+
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_marginTop="16dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+			<android.support.design.widget.TextInputLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1">
+
+				<EditText
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:id="@+id/edit_captcha"
+						android:singleLine="true"
+						android:maxLength="4"
+						android:hint="@string/hint_captcha"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<ImageView
+					android:id="@+id/captcha_image"
+					android:layout_width="100dp"
+					android:layout_height="match_parent"
+					android:layout_marginStart="16dp"/>
+
+		</LinearLayout>
+
+		<Button
+				android:id="@+id/btn_query_score"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/btn_query_score"
+				android:textColor="@android:color/white"
+				android:layout_marginTop="24dp"
+				android:backgroundTint="@color/colorAccent"/>
+
+	</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
