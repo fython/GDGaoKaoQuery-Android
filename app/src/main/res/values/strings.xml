@@ -9,9 +9,16 @@
 
 	<string name="btn_query_score">查询成绩</string>
 
+	<string name="toast_unsupported_api">很抱歉，这个接口暂时不受支持。</string>
+
 	<string name="score_result_title">查询结果</string>
 	<string name="score_result_header">姓名：%1$s\n学号：%2$s\nIssue 日期：%3$s\n各科目成绩：\n</string>
 	<string name="score_result_item_format">· %1$s ： %2$s\n</string>
 	<string name="score_result_footer">最终成绩结果由学校派放正式通知为准。</string>
+
+	<string name="admission_result_title">查询结果</string>
+	<string name="admission_result_header">姓名：%1$s\n学号：%2$s\nIssue 日期：%3$s\n\n录取结果：\n</string>
+	<string name="admission_result_item_format">院校编号：%1$s\n录取批次：%2$s\n院校类型：%3$s\n院校名称：%4$s\n\n</string>
+	<string name="admission_result_footer">最终录取结果由学校派放正式通知为准。</string>
 
 </resources>
