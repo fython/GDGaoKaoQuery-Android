@@ -10,6 +10,10 @@
 
 接口是直接从 5184 广东考试服务网拿到的，没有经过授权，如果官方有任何意见可以联系我，我马上进行下架。
 
+## 下载
+
+[Github Releases](https://github.com/fython/GDGaoKaoQuery-Android/releases) 或者 [酷安市场](http://www.coolapk.com/apk/26892) 都可以找到预编译安装包。
+
 ## 更新进度
 
 - [x] 使用 Kotlin 语言重构，并使用自己为 Kotlin Android App 开发设计的扩展库 [Kotlinyan](https://github.com/fython/Kotlinyan)。
