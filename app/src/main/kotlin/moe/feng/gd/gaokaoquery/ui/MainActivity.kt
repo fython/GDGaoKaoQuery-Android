@@ -1,7 +1,7 @@
 package moe.feng.gd.gaokaoquery.ui
 
 import android.app.AlertDialog
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -21,6 +21,7 @@ import moe.feng.gd.gaokaoquery.model.ScoreResult
 import moe.feng.kotlinyan.common.AndroidExtensions
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import android.support.customtabs.CustomTabsIntent
 
 class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemSelectedListener {
 
@@ -46,13 +47,26 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 		setSupportActionBar(toolbar)
 
 		queryScoreBtn.onClick {
-			// TODO 检查输入框内容是否完整
+			if (numberEdit.text.isNullOrEmpty()) {
+				snackbar(R.string.toast_input_number)
+				return@onClick
+			}
+			if (birthEdit.text.isNullOrEmpty()) {
+				snackbar(R.string.toast_input_birth)
+				return@onClick
+			}
+			if (captchaEdit.text.isNullOrEmpty()) {
+				snackbar(R.string.toast_input_captcha)
+				return@onClick
+			}
 			if (currentApi.contains("gkcj")) {
+				queryScoreBtn.isEnabled = false
 				doQueryScore()
 			} else if (currentApi.contains("gklq")) {
+				queryScoreBtn.isEnabled = false
 				doQueryAdmission()
 			} else {
-				Snackbar.make(rootLayout, R.string.toast_unsupported_api, Snackbar.LENGTH_LONG).show()
+				snackbar(R.string.toast_unsupported_api)
 			}
 		}
 		captchaImage.onClick { refreshCaptcha() }
@@ -92,9 +106,12 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 	}
 
 	private fun doQueryScore() = doAsync {
+		val captcha = captchaEdit.text.toString()
+		uiThread { captchaEdit.setText("") }
 		val result = QueryApi.queryScore(2016, numberEdit.text.toString().toInt(),
-				birthEdit.text.toString(), captchaEdit.text.toString(), null)
+				birthEdit.text.toString(), captcha, null)
 		uiThread {
+			queryScoreBtn.isEnabled = true
 			if (result?.code == 200) {
 				showScoreResultDialog(result.data!!)
 			}
@@ -103,9 +120,12 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 	}
 
 	private fun doQueryAdmission() = doAsync {
+		val captcha = captchaEdit.text.toString()
+		uiThread { captchaEdit.setText("") }
 		val result = QueryApi.queryAdmission(2016, numberEdit.text.toString().toInt(),
-				birthEdit.text.toString(), captchaEdit.text.toString(), null)
+				birthEdit.text.toString(), captcha, null)
 		uiThread {
+			queryScoreBtn.isEnabled = true
 			if (result?.code == 200) {
 				showAdmissionResultDialog(result.data!!)
 			}
@@ -146,14 +166,27 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 				.show()
 	}
 
+	private fun snackbar(message: CharSequence) {
+		Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG).show()
+	}
+
+	private fun snackbar(message: Int) {
+		Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG).show()
+	}
+
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.menu_main, menu)
-		menu.tintItemsColor(Color.WHITE)
+		menu.tintItemsColor(resources.color[R.color.primary_dark_text])
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		when (item.itemId) {
+			R.id.action_open_5184 -> {
+				val builder = CustomTabsIntent.Builder()
+				builder.setToolbarColor(resources.color[R.color.colorPrimary])
+				builder.build().launchUrl(this, Uri.parse("http://www.5184.com/"))
+			}
 			R.id.action_help -> {}
 		}
 		return super.onOptionsItemSelected(item)

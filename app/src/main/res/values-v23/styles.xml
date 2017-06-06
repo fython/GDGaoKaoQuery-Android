@@ -6,6 +6,8 @@
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
+		<item name="android:windowLightStatusBar">true</item>
+		<item name="android:titleTextColor">@color/primary_dark_text</item>
 	</style>
 
 	<style name="AppTheme.NoActionBar">
@@ -13,6 +15,8 @@
 		<item name="windowNoTitle">true</item>
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
 		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:windowLightStatusBar">true</item>
+		<item name="android:titleTextColor">@color/primary_dark_text</item>
 	</style>
 
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"/>

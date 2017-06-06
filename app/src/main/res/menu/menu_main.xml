@@ -2,10 +2,19 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="moe.feng.gd.gaokaoquery.ui.MainActivity">
+
+	<item
+			android:id="@+id/action_open_5184"
+			android:title="@string/action_open_5184"
+			android:icon="@drawable/ic_open_in_new_black_24dp"
+			android:orderInCategory="100"
+			app:showAsAction="ifRoom"/>
+
 	<item
 			android:id="@+id/action_help"
 			android:title="@string/action_help"
 			android:icon="@drawable/ic_help_black_24dp"
-			android:orderInCategory="100"
+			android:orderInCategory="200"
 			app:showAsAction="ifRoom"/>
+
 </menu>
