@@ -7,7 +7,7 @@
 		tools:showIn="@layout/activity_main"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context="moe.feng.gd.gaokaoquery.ui.MainActivity">
+		tools:context="moe.feng.gd.gkquery.ui.MainActivity">
 
 	<LinearLayout
 			android:orientation="vertical"

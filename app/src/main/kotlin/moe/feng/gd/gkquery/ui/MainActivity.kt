@@ -1,4 +1,4 @@
-package moe.feng.gd.gaokaoquery.ui
+package moe.feng.gd.gkquery.ui
 
 import android.app.AlertDialog
 import android.net.Uri
@@ -13,11 +13,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import moe.feng.gd.gaokaoquery.R
-import moe.feng.gd.gaokaoquery.api.CommonApi
-import moe.feng.gd.gaokaoquery.api.QueryApi
-import moe.feng.gd.gaokaoquery.model.AdmissionResult
-import moe.feng.gd.gaokaoquery.model.ScoreResult
+import moe.feng.gd.gkquery.R
+import moe.feng.gd.gkquery.api.CommonApi
+import moe.feng.gd.gkquery.api.QueryApi
+import moe.feng.gd.gkquery.model.AdmissionResult
+import moe.feng.gd.gkquery.model.ScoreResult
 import moe.feng.kotlinyan.common.AndroidExtensions
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick

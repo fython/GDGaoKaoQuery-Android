@@ -1,10 +1,10 @@
-package moe.feng.gd.gaokaoquery.api
+package moe.feng.gd.gkquery.api
 
 import android.util.Log
 import com.google.gson.Gson
-import moe.feng.gd.gaokaoquery.model.AdmissionResult
-import moe.feng.gd.gaokaoquery.model.BaseMessage
-import moe.feng.gd.gaokaoquery.model.ScoreResult
+import moe.feng.gd.gkquery.model.AdmissionResult
+import moe.feng.gd.gkquery.model.BaseMessage
+import moe.feng.gd.gkquery.model.ScoreResult
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils

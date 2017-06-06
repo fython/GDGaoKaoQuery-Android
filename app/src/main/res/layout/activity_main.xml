@@ -7,7 +7,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:fitsSystemWindows="true"
-		tools:context="moe.feng.gd.gaokaoquery.ui.MainActivity">
+		tools:context="moe.feng.gd.gkquery.ui.MainActivity">
 
 	<android.support.design.widget.AppBarLayout
 			android:id="@+id/app_bar"

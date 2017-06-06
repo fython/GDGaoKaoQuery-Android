@@ -1,4 +1,4 @@
-package moe.feng.gd.gaokaoquery.model
+package moe.feng.gd.gkquery.model
 
 import com.google.gson.annotations.SerializedName
 
