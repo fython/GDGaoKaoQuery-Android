@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), AndroidExtensions {
 	}
 
 	private fun refreshCaptcha() {
-		captchaImage.loadBitmap { CommonApi.getCaptchaNewApi()!! }
+		captchaImage.loadBitmap { CommonApi.getCaptchaNewApi(CommonApi.captchaReferer["2016gkcj"])!! }
 	}
 
 	private fun doQueryScore() = doAsync {
