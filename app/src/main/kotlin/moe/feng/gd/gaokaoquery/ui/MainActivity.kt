@@ -166,12 +166,28 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 				.show()
 	}
 
+	private fun showAboutDialog() {
+		AlertDialog.Builder(this)
+				.setTitle(R.string.about_title)
+				.setMessage(R.string.about_message)
+				.setNeutralButton(R.string.about_github) {_, _
+					-> openUrl("https://github.com/fython/GDGaoKaoQuery-Android")}
+				.setPositiveButton(android.R.string.ok) {_, _ ->}
+				.show()
+	}
+
 	private fun snackbar(message: CharSequence) {
 		Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG).show()
 	}
 
 	private fun snackbar(message: Int) {
 		Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG).show()
+	}
+
+	private fun openUrl(url: String) {
+		val builder = CustomTabsIntent.Builder()
+		builder.setToolbarColor(resources.color[R.color.colorPrimary])
+		builder.build().launchUrl(this, Uri.parse(url))
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -182,12 +198,8 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		when (item.itemId) {
-			R.id.action_open_5184 -> {
-				val builder = CustomTabsIntent.Builder()
-				builder.setToolbarColor(resources.color[R.color.colorPrimary])
-				builder.build().launchUrl(this, Uri.parse("http://www.5184.com/"))
-			}
-			R.id.action_help -> {}
+			R.id.action_open_5184 -> openUrl("http://www.5184.com/")
+			R.id.action_help -> showAboutDialog()
 		}
 		return super.onOptionsItemSelected(item)
 	}

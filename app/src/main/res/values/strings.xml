@@ -25,4 +25,15 @@
 	<string name="admission_result_item_format">院校编号：%1$s\n录取批次：%2$s\n院校类型：%3$s\n院校名称：%4$s\n\n</string>
 	<string name="admission_result_footer">最终录取结果由学校派放正式通知为准。</string>
 
+	<string name="about_title">关于</string>
+	<string name="about_message">
+		"这个应用是 2016 年的时候拿到自己的结果之后忽然想到做的，其实把网页查询做成应用并不是很必要，"
+		"只不过想方便后面还不知道结果又觉得网页查询太麻烦的朋友。\n\n"
+		"接口是直接从 5184 广东考试服务网拿到的，没有经过授权，如果官方有任何意见可以联系我，我马上进行下架。\n"
+		"17 年 6 月用 Kotlin 重构了一遍，顺便接入新的 5184 接口，功能可能不完整，会继续更新完善的。\n"
+		"应用代码已经在 GitHub 上开源，感兴趣的同学可以点击下面的按钮跳转查看。\n\n"
+		"如果你认为这个应用确实非常有用，可以通过支付宝请我一杯饮料：fythonx\@gmail.com"
+	</string>
+	<string name="about_github">Github</string>
+
 </resources>
