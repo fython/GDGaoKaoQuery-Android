@@ -16,11 +16,12 @@ object CommonApi {
 
 	val captchaReferer = mapOf(
 			"2016gkcj" to "http://page-resoures.5184.com/cjquery/w/index.html?20160600gk_cj",
-			"2016gklq" to "http://page-resoures.5184.com/cjquery/w/index.html?20160800gk_lq"
+			"2016gklq" to "http://page-resoures.5184.com/cjquery/w/index.html?20160800gk_lq",
+			"2017gkcj" to "http://page-resoures.5184.com/cjquery/w/gkcj/query.html?20170600gk_cj"
 	)
 
 	fun getCaptchaNewApi(referer: String?, random : Double = Random().nextDouble()): Bitmap? {
-		val request = HttpGet("http://query-score.5184.com/web/captcha?random=$random")
+		val request = HttpGet("https://query-score.5184.com/web/captcha?random=$random")
 		request.addHeader("Referer", referer)
 		request.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" +
 				" AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
@@ -29,6 +30,7 @@ object CommonApi {
 		try {
 			result = client.execute(request)
 		} catch (e: Exception) {
+			e.printStackTrace()
 			return null
 		}
 		saveCookie(client.cookieStore)
@@ -36,6 +38,7 @@ object CommonApi {
 		try {
 			return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 		} catch (e: Exception) {
+			e.printStackTrace()
 			return null
 		}
 	}

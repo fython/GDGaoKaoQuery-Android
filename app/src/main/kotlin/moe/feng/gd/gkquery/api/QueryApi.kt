@@ -40,13 +40,13 @@ object QueryApi {
 	}
 
 	init {
-		queryScoreMethods[2016..2016] = {
-			_, no, birth, captcha, _ ->
-			val url = "http://query-score.5184.com/web/score?" +
-					"verify_code=$captcha&issue_date=20160600&data_type=gk_cj&ksh=$no&csrq=$birth"
+		queryScoreMethods[2016..2017] = {
+			year, no, birth, captcha, _ ->
+			val url = "https://query-score.5184.com/web/score?" +
+					"verify_code=$captcha&issue_date=${year}0600&data_type=gk_cj&ksh=$no&csrq=$birth"
 			HttpGet(url)
 					.let {
-						it.addHeader("Referer", "http://page-resoures.5184.com/cjquery/w/index.html?20160600gk_cj")
+						it.addHeader("Referer", "http://page-resoures.5184.com/cjquery/w/index.html?${year}0600gk_cj")
 						it.addHeader("Host", "query-score.5184.com")
 						it.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
 								"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")

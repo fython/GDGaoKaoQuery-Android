@@ -1,10 +1,8 @@
 package moe.feng.gd.gkquery.ui
 
-import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Editable
@@ -22,8 +20,11 @@ import moe.feng.kotlinyan.common.AndroidExtensions
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import android.support.customtabs.CustomTabsIntent
+import android.support.design.widget.Snackbar
+import moe.feng.kotlinyan.common.SupportDesignExtensions
 
-class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemSelectedListener {
+class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtensions,
+		AdapterView.OnItemSelectedListener {
 
 	val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 	val spinner by lazy { find<Spinner>(R.id.spinner_year) }
@@ -35,11 +36,12 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 	val rootLayout by lazy { find<CoordinatorLayout>(R.id.root_layout) }
 
 	val apiList = listOf(
+			mapOf("title" to "2017 高考成绩 (Beta)", "key" to "2017gkcj"),
 			mapOf("title" to "2016 高考成绩", "key" to "2016gkcj"),
 			mapOf("title" to "2016 高考录取", "key" to "2016gklq")
 	)
 
-	var currentApi = "2016gkcj"
+	var currentApi = "2017gkcj"
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -48,15 +50,15 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 
 		queryScoreBtn.onClick {
 			if (numberEdit.text.isNullOrEmpty()) {
-				snackbar(R.string.toast_input_number)
+				rootLayout.snackbar { messageRes = R.string.toast_input_number }.show()
 				return@onClick
 			}
 			if (birthEdit.text.isNullOrEmpty()) {
-				snackbar(R.string.toast_input_birth)
+				rootLayout.snackbar { messageRes = R.string.toast_input_birth }.show()
 				return@onClick
 			}
 			if (captchaEdit.text.isNullOrEmpty()) {
-				snackbar(R.string.toast_input_captcha)
+				rootLayout.snackbar { messageRes = R.string.toast_input_captcha }.show()
 				return@onClick
 			}
 			if (currentApi.contains("gkcj")) {
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 				queryScoreBtn.isEnabled = false
 				doQueryAdmission()
 			} else {
-				snackbar(R.string.toast_unsupported_api)
+				rootLayout.snackbar { messageRes = R.string.toast_unsupported_api }.show()
 			}
 		}
 		captchaImage.onClick { refreshCaptcha() }
@@ -97,23 +99,30 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 			return
 		}
 		captchaImage.loadBitmap {
-			if (currentApi.startsWith("2016")) {
-				CommonApi.getCaptchaNewApi(CommonApi.captchaReferer[currentApi])
-			} else {
-				null
-			}
+			CommonApi.getCaptchaNewApi(CommonApi.captchaReferer[currentApi])
 		}
 	}
 
 	private fun doQueryScore() = doAsync {
 		val captcha = captchaEdit.text.toString()
 		uiThread { captchaEdit.setText("") }
-		val result = QueryApi.queryScore(2016, numberEdit.text.toString().toInt(),
-				birthEdit.text.toString(), captcha, null)
+		val result = QueryApi.queryScore(
+				currentApi.filter(Char::isDigit).toInt(),
+				numberEdit.text.toString().toInt(),
+				birthEdit.text.toString(),
+				captcha,
+				null
+		)
 		uiThread {
 			queryScoreBtn.isEnabled = true
 			if (result?.code == 200) {
 				showScoreResultDialog(result.data!!)
+			} else {
+				rootLayout.snackbar {
+					message = result?.msg
+					duration = Snackbar.LENGTH_INDEFINITE
+					action(android.R.string.ok) {}
+				}.show()
 			}
 			refreshCaptcha()
 		}
@@ -128,60 +137,58 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 			queryScoreBtn.isEnabled = true
 			if (result?.code == 200) {
 				showAdmissionResultDialog(result.data!!)
+			} else {
+				rootLayout.snackbar {
+					message = result?.msg
+					duration = Snackbar.LENGTH_INDEFINITE
+					action(android.R.string.ok) {}
+				}.show()
 			}
 			refreshCaptcha()
 		}
 	}
 
 	private fun showScoreResultDialog(result: ScoreResult) {
-		AlertDialog.Builder(this)
-				.setTitle(R.string.score_result_title)
-				.setMessage(buildString {
-					append(resources.string[R.string.score_result_header]
-							?.format(result.studentName, result.studentNumber, result.issueDate))
-					result.scores
-							.map { resources.string[R.string.score_result_item_format]?.format(it.name, it.point) }
-							.forEach { append(it) }
-					append(resources.string[R.string.score_result_footer])
-				})
-				.setPositiveButton(android.R.string.ok) {_, _ ->}
-				.show()
+		buildAlertDialog {
+			titleRes = R.string.score_result_title
+			message = buildString {
+				append(resources.string[R.string.score_result_header]
+						?.format(result.studentName, result.studentNumber, result.issueDate))
+				result.scores
+						.map { resources.string[R.string.score_result_item_format]?.format(it.name, it.point) }
+						.forEach { append(it) }
+				append(resources.string[R.string.score_result_footer])
+			}
+			positiveButton(android.R.string.ok) {_, _ ->}
+		}.show()
 	}
 
 	private fun showAdmissionResultDialog(result: AdmissionResult) {
-		AlertDialog.Builder(this)
-				.setTitle(R.string.score_result_title)
-				.setMessage(buildString {
-					append(resources.string[R.string.admission_result_header]
-							?.format(result.studentName, result.studentNumber, result.issueDate))
-					result.admission
-							.map {
-								resources.string[R.string.admission_result_item_format]
-										?.format(it.schoolNumber, it.batch, it.category, it.schoolName)
-							}
-							.forEach { append(it) }
-					append(resources.string[R.string.admission_result_footer])
-				})
-				.setPositiveButton(android.R.string.ok) {_, _ ->}
-				.show()
+		buildAlertDialog {
+			titleRes = R.string.score_result_title
+			message = buildString {
+				append(resources.string[R.string.admission_result_header]
+						?.format(result.studentName, result.studentNumber, result.issueDate))
+				result.admission
+						.map {
+							resources.string[R.string.admission_result_item_format]
+									?.format(it.schoolNumber, it.batch, it.category, it.schoolName)
+						}
+						.forEach { append(it) }
+				append(resources.string[R.string.admission_result_footer])
+			}
+			positiveButton(android.R.string.ok) {_, _ ->}
+		}.show()
 	}
 
 	private fun showAboutDialog() {
-		AlertDialog.Builder(this)
-				.setTitle(R.string.about_title)
-				.setMessage(R.string.about_message)
-				.setNeutralButton(R.string.about_github) {_, _
-					-> openUrl("https://github.com/fython/GDGaoKaoQuery-Android")}
-				.setPositiveButton(android.R.string.ok) {_, _ ->}
-				.show()
-	}
-
-	private fun snackbar(message: CharSequence) {
-		Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG).show()
-	}
-
-	private fun snackbar(message: Int) {
-		Snackbar.make(rootLayout, message, Snackbar.LENGTH_LONG).show()
+		buildAlertDialog {
+			titleRes = R.string.about_title
+			messageRes = R.string.about_message
+			neutralButton(R.string.about_github) {
+				_, _ -> openUrl("https://github.com/fython/GDGaoKaoQuery-Android")}
+			positiveButton(android.R.string.ok) {_, _ ->}
+		}.show()
 	}
 
 	private fun openUrl(url: String) {
@@ -203,4 +210,5 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, AdapterView.OnItemS
 		}
 		return super.onOptionsItemSelected(item)
 	}
+
 }
