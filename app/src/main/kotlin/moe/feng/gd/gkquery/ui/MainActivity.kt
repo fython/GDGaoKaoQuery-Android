@@ -1,5 +1,6 @@
 package moe.feng.gd.gkquery.ui
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
@@ -23,6 +24,10 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import moe.feng.kotlinyan.common.SupportDesignExtensions
 
+const val KEY_REMEMBER = "remember"
+const val KEY_NUMBER = "number"
+const val KEY_BIRTH = "birth"
+
 class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtensions,
 		AdapterView.OnItemSelectedListener {
 
@@ -34,6 +39,7 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 	val birthEdit by lazy { find<EditText>(R.id.edit_birth) }
 	val captchaEdit by lazy { find<EditText>(R.id.edit_captcha) }
 	val rootLayout by lazy { find<CoordinatorLayout>(R.id.root_layout) }
+	val toggleRemeber by lazy { find<CheckBox>(R.id.toggle_remember) }
 
 	val apiList = listOf(
 			mapOf("title" to "2017 高考成绩 (Beta)", "key" to "2017gkcj"),
@@ -43,10 +49,19 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 
 	var currentApi = "2017gkcj"
 
+	val sharedPref by lazy { getSharedPreferences("pref", Context.MODE_PRIVATE) }
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		setSupportActionBar(toolbar)
+
+		// 填充储存数据
+		toggleRemeber.isChecked = sharedPref.getBoolean(KEY_REMEMBER, false)
+		if (toggleRemeber.isChecked) {
+			numberEdit.setText(sharedPref.getString(KEY_NUMBER, ""))
+			birthEdit.setText(sharedPref.getString(KEY_BIRTH, ""))
+		}
 
 		queryScoreBtn.onClick {
 			if (numberEdit.text.isNullOrEmpty()) {
@@ -84,6 +99,17 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 				}
 			}
 		})
+	}
+
+	override fun onStop() {
+		super.onStop()
+		sharedPref.edit().putBoolean(KEY_REMEMBER, toggleRemeber.isChecked).apply()
+		if (toggleRemeber.isChecked) {
+			sharedPref.edit()
+					.putString(KEY_NUMBER, numberEdit.text.toString())
+					.putString(KEY_BIRTH, birthEdit.text.toString())
+					.apply()
+		}
 	}
 
 	override fun onNothingSelected(parent: AdapterView<*>?) {}

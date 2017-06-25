@@ -82,14 +82,29 @@
 
 		</LinearLayout>
 
-		<Button
-				android:id="@+id/btn_query_score"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/btn_query_score"
-				android:textColor="@android:color/white"
+		<LinearLayout
+				android:orientation="horizontal"
 				android:layout_marginTop="24dp"
-				android:backgroundTint="@color/colorAccent"/>
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical">
+
+			<Button
+					android:id="@+id/btn_query_score"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/btn_query_score"
+					android:textColor="@android:color/white"
+					android:backgroundTint="@color/colorAccent"/>
+
+			<CheckBox
+					android:id="@+id/toggle_remember"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="16dp"
+					android:text="@string/toggle_remember"/>
+
+		</LinearLayout>
 
 	</LinearLayout>
 

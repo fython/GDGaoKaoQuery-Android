@@ -9,6 +9,7 @@
 	<string name="hint_captcha">验证码</string>
 
 	<string name="btn_query_score">查询成绩</string>
+	<string name="toggle_remember">记住我的信息（仅本地）</string>
 
 	<string name="toast_unsupported_api">很抱歉，这个接口暂时不受支持。</string>
 	<string name="toast_input_number">请输入你的学号。</string>
