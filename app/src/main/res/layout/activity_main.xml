@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.v4.widget.DrawerLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/root_layout"
+		android:id="@+id/drawer_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fitsSystemWindows="true"
 		tools:context="moe.feng.gd.gkquery.ui.MainActivity">
 
-	<android.support.design.widget.AppBarLayout
-			android:id="@+id/app_bar"
-			android:fitsSystemWindows="true"
-			android:layout_height="@dimen/app_bar_height"
+	<android.support.design.widget.CoordinatorLayout
+			android:id="@+id/root_layout"
 			android:layout_width="match_parent"
-			android:theme="@style/AppTheme.AppBarOverlay">
+			android:layout_height="match_parent"
+			android:fitsSystemWindows="true">
 
-		<android.support.design.widget.CollapsingToolbarLayout
-				android:id="@+id/toolbar_layout"
+		<android.support.design.widget.AppBarLayout
+				android:id="@+id/app_bar"
 				android:fitsSystemWindows="true"
+				android:layout_height="@dimen/app_bar_height"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				app:layout_scrollFlags="scroll|exitUntilCollapsed"
-				app:contentScrim="?attr/colorPrimary">
+				android:theme="@style/AppTheme.AppBarOverlay">
 
-			<android.support.v7.widget.Toolbar
-					android:id="@+id/toolbar"
-					android:layout_height="?attr/actionBarSize"
+			<android.support.design.widget.CollapsingToolbarLayout
+					android:id="@+id/toolbar_layout"
+					android:fitsSystemWindows="true"
 					android:layout_width="match_parent"
-					app:layout_collapseMode="pin"
-					app:popupTheme="@style/AppTheme.PopupOverlay"/>
+					android:layout_height="match_parent"
+					app:layout_scrollFlags="scroll|exitUntilCollapsed"
+					app:contentScrim="?attr/colorPrimary">
 
-		</android.support.design.widget.CollapsingToolbarLayout>
+				<android.support.v7.widget.Toolbar
+						android:id="@+id/toolbar"
+						android:layout_height="?attr/actionBarSize"
+						android:layout_width="match_parent"
+						app:layout_collapseMode="pin"
+						app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-	</android.support.design.widget.AppBarLayout>
+			</android.support.design.widget.CollapsingToolbarLayout>
 
-	<include layout="@layout/content_main"/>
+		</android.support.design.widget.AppBarLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+		<include layout="@layout/content_main"/>
+
+	</android.support.design.widget.CoordinatorLayout>
+
+	<android.support.design.widget.NavigationView
+			android:id="@+id/navigation_view"
+			android:layout_width="260dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			app:menu="@menu/navigation_main"/>
+
+</android.support.v4.widget.DrawerLayout>

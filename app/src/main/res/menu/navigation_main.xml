@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:title="更多工具">
+
+		<menu>
+
+			<item android:id="@+id/item_gdgydx_lq" android:title="广东工业大学录取查询"/>
+
+		</menu>
+
+	</item>
+
+</menu>

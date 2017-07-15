@@ -21,7 +21,11 @@ import moe.feng.kotlinyan.common.AndroidExtensions
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import android.support.customtabs.CustomTabsIntent
+import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.DrawerLayout
+import android.view.Gravity
+import moe.feng.gd.gkquery.api.MoreApi
 import moe.feng.kotlinyan.common.SupportDesignExtensions
 
 const val KEY_REMEMBER = "remember"
@@ -29,7 +33,7 @@ const val KEY_NUMBER = "number"
 const val KEY_BIRTH = "birth"
 
 class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtensions,
-		AdapterView.OnItemSelectedListener {
+		AdapterView.OnItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
 	val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 	val spinner by lazy { find<Spinner>(R.id.spinner_year) }
@@ -40,6 +44,9 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 	val captchaEdit by lazy { find<EditText>(R.id.edit_captcha) }
 	val rootLayout by lazy { find<CoordinatorLayout>(R.id.root_layout) }
 	val toggleRemeber by lazy { find<CheckBox>(R.id.toggle_remember) }
+
+	val drawerLayout by lazy { find<DrawerLayout>(R.id.drawer_layout) }
+	val navigationView by lazy { find<NavigationView>(R.id.navigation_view) }
 
 	val apiList = listOf(
 			mapOf("title" to "2017 高考录取 (Beta)", "key" to "2017gklq"),
@@ -55,7 +62,14 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
+
+		// 设置 Toolbar
 		setSupportActionBar(toolbar)
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
+
+		// 设置 NavigationView 事件监听
+		navigationView.setNavigationItemSelectedListener(this)
 
 		// 填充储存数据
 		toggleRemeber.isChecked = sharedPref.getBoolean(KEY_REMEMBER, false)
@@ -232,10 +246,18 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		when (item.itemId) {
+			android.R.id.home -> drawerLayout.openDrawer(Gravity.START)
 			R.id.action_open_5184 -> openUrl("http://www.5184.com/")
 			R.id.action_help -> showAboutDialog()
 		}
 		return super.onOptionsItemSelected(item)
+	}
+
+	override fun onNavigationItemSelected(item: MenuItem): Boolean {
+		when (item.itemId) {
+			R.id.item_gdgydx_lq -> openUrl(MoreApi.GDGYDX_ADMISSION_QUERY)
+		}
+		return true
 	}
 
 }
