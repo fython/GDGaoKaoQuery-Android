@@ -42,12 +42,13 @@ class MainActivity : AppCompatActivity(), AndroidExtensions, SupportDesignExtens
 	val toggleRemeber by lazy { find<CheckBox>(R.id.toggle_remember) }
 
 	val apiList = listOf(
+			mapOf("title" to "2017 高考录取 (Beta)", "key" to "2017gklq"),
 			mapOf("title" to "2017 高考成绩 (Beta)", "key" to "2017gkcj"),
 			mapOf("title" to "2016 高考成绩", "key" to "2016gkcj"),
 			mapOf("title" to "2016 高考录取", "key" to "2016gklq")
 	)
 
-	var currentApi = "2017gkcj"
+	var currentApi = "2017gklq"
 
 	val sharedPref by lazy { getSharedPreferences("pref", Context.MODE_PRIVATE) }
 

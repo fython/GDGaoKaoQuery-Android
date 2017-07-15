@@ -46,7 +46,7 @@ object QueryApi {
 					"verify_code=$captcha&issue_date=${year}0600&data_type=gk_cj&ksh=$no&csrq=$birth"
 			HttpGet(url)
 					.let {
-						it.addHeader("Referer", "http://page-resoures.5184.com/cjquery/w/index.html?${year}0600gk_cj")
+						it.addHeader("Referer", CommonApi.captchaReferer["${year}gkcj"])
 						it.addHeader("Host", "query-score.5184.com")
 						it.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
 								"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
@@ -65,13 +65,14 @@ object QueryApi {
 					}
 		}
 
-		queryAdmissionMethods[2016..2016] = {
-			_, no, birth, captcha, _ ->
-			val url = "http://query-score.5184.com/web/score?" +
-					"verify_code=$captcha&issue_date=20160800&data_type=gk_lq&ksh=$no&csrq=$birth"
+		queryAdmissionMethods[2016..2017] = {
+			year, no, birth, captcha, _ ->
+			val issueDates = mapOf(2016 to "20160800", 2017 to "20170700")
+			val url = "https://query-score.5184.com/web/score?" +
+					"verify_code=$captcha&issue_date=${issueDates[year]}&data_type=gk_lq&ksh=$no&csrq=$birth"
 			HttpGet(url)
 					.let {
-						it.addHeader("Referer", "http://page-resoures.5184.com/cjquery/w/index.html?20160800gk_lq")
+						it.addHeader("Referer", CommonApi.captchaReferer["${year}gklq"])
 						it.addHeader("Host", "query-score.5184.com")
 						it.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
 								"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
@@ -80,6 +81,7 @@ object QueryApi {
 					}
 					.let { client.execute(it) }
 					.let {
+						Log.i(javaClass.simpleName, "Status code: " + it.statusLine.statusCode)
 						if (it.statusLine.statusCode == 200) {
 							val json = EntityUtils.toString(it.entity)
 							Log.d(javaClass.simpleName, "Result 200: $json")

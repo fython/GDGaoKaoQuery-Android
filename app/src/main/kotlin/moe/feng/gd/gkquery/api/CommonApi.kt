@@ -15,9 +15,10 @@ object CommonApi {
 	var cookie : String? = null
 
 	val captchaReferer = mapOf(
-			"2016gkcj" to "http://page-resoures.5184.com/cjquery/w/index.html?20160600gk_cj",
-			"2016gklq" to "http://page-resoures.5184.com/cjquery/w/index.html?20160800gk_lq",
-			"2017gkcj" to "http://page-resoures.5184.com/cjquery/w/gkcj/query.html?20170600gk_cj"
+			"2016gkcj" to "http://page-resoures.5184.com/cjquery/w/gkcj/query.html?20160600gk_cj",
+			"2016gklq" to "http://page-resoures.5184.com/cjquery/w/gklq/query.html?20160800gk_lq",
+			"2017gkcj" to "http://page-resoures.5184.com/cjquery/w/gkcj/query.html?20170600gk_cj",
+			"2017gklq" to "http://page-resoures.5184.com/cjquery/w/gklq/query.html?20170700gk_lq"
 	)
 
 	fun getCaptchaNewApi(referer: String?, random : Double = Random().nextDouble()): Bitmap? {
